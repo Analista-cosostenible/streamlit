@@ -10,6 +10,11 @@ def cargar_datos_iniciales():
         st.error("El archivo 'Repositorio Cosostenible.csv' no se encontró.")
         return pd.DataFrame()
 
+if archivo_subido is not None:
+    delimitador = detectar_delimitador(archivo_subido)
+    datos = cargar_csv_seguro(archivo_subido, delimitador=delimitador)
+
+
 # Función para cargar datos del uploader
 def load_data(file):
     if file.name.endswith(".csv"):
