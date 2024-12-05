@@ -1,17 +1,16 @@
 import streamlit as st
 import pandas as pd
 
-# Función para cargar datos desde un archivo CSV o Excel
-@st.cache_data
-def load_data(file):
-    # Leer el archivo dependiendo de su extensión
-    if file.name.endswith('.csv'):
-        return pd.read_csv(file)
-    elif file.name.endswith('.xlsx'):
-        return pd.read_excel(file)
-    else:
-        st.error("El archivo debe ser CSV o Excel")
-        return pd.DataFrame()
+# Cargar datos al iniciar la aplicación
+@st.cache_data  # Usar cache para mejorar rendimiento
+def cargar_datos():
+    return pd.read_csv('Repositorio Cosostenible.csv')  # Cambia 'data/mi_archivo.csv' al nombre y ubicación real del archivo
+
+datos = cargar_datos()
+
+# Mostrar datos en la aplicación
+st.title("Visualización de Datos Pre-Cargados")
+st.dataframe(datos)
 
 # Título de la aplicación
 st.title("Visualizador de Documentos desde un Archivo CSV o Excel")
@@ -45,7 +44,7 @@ if uploaded_file is not None:
 
             # Filtro para seleccionar tipo de documento
             st.write("### Filtrar por Tipo de Documento:")
-            document_types = ['Imágenes', 'Videos', 'PDFs', 'Textos/CSV', 'Excel', 'Todos']
+            document_types = ['Todos', 'Videos', 'PDFs', 'Textos/CSV', 'Excel', 'Imágenes']
             selected_doc_type = st.selectbox("Selecciona el tipo de documento que deseas visualizar", document_types)
 
             # Resultados filtrados
